@@ -2,11 +2,9 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <title>Kalkulator Sederhana - modul2_nim</title>
+    <title>Kalkulator Sederhana - modul3</title>
     <style>
-      /* ------------------------------
-       CSS: Mengatur tata letak & gaya
-       ------------------------------ */
+      /* CSS: Mengatur tampilan dan layout */
       body {
         font-family: Arial, sans-serif;
         margin: 20px;
@@ -18,17 +16,17 @@
         margin-bottom: 20px;
       }
 
-      /* Container utama untuk tombol */
+      /* Container grid untuk tombol */
       .grid-container {
         display: grid;
         grid-template-columns: repeat(3, 1fr); /* 3 kolom */
-        grid-template-rows: repeat(4, 60px); /* 4 baris, tinggi 60px */
-        gap: 10px; /* jarak antar-tombol */
-        max-width: 300px; /* lebar maksimal container */
-        margin: 0 auto; /* agar container di tengah */
+        grid-template-rows: repeat(4, 60px); /* 4 baris dengan tinggi 60px */
+        gap: 10px;
+        max-width: 300px;
+        margin: 0 auto;
       }
 
-      /* Gaya untuk tombol */
+      /* Gaya tombol */
       .grid-container button {
         font-size: 1.2rem;
         cursor: pointer;
@@ -43,7 +41,7 @@
         background-color: #ccc;
       }
 
-      /* Area output */
+      /* Gaya untuk label output */
       #labelOutput {
         background: #ffffff;
         border: 1px solid #ccc;
@@ -58,8 +56,8 @@
     </style>
   </head>
   <body>
-    <!-- Label Output -->
-    <h2 id="labelOutput">Output akan muncul di sini</h2>
+    <!-- Label Output untuk menampilkan angka atau hasil perhitungan -->
+    <h2 id="labelOutput">0</h2>
 
     <!-- Grid Container untuk tombol -->
     <div class="grid-container">
@@ -67,17 +65,14 @@
       <button>+</button>
       <button>=</button>
       <button>0</button>
-
       <!-- Baris 2 -->
       <button>1</button>
       <button>2</button>
       <button>3</button>
-
       <!-- Baris 3 -->
       <button>4</button>
       <button>5</button>
       <button>6</button>
-
       <!-- Baris 4 -->
       <button>7</button>
       <button>8</button>
@@ -85,20 +80,63 @@
     </div>
 
     <script>
-      // Mengambil elemen labelOutput
+      // Variabel untuk menyimpan input saat ini dan daftar operand
+      let currentInput = "";
+      let operands = [];
+
+      // Mengambil elemen label output
       const labelOutput = document.getElementById("labelOutput");
 
-      // Mengambil semua tombol di dalam .grid-container
+      // Mengambil semua tombol di dalam grid container
       const buttons = document.querySelectorAll(".grid-container button");
 
-      // Menambahkan event listener pada setiap tombol
+      // Fungsi untuk memperbarui tampilan output
+      function updateDisplay(value) {
+        labelOutput.textContent = value;
+      }
+
+      // Fungsi untuk menghitung jumlah seluruh operand
+      function calculateSum() {
+        let sum = 0;
+        for (let num of operands) {
+          sum += num;
+        }
+        return sum;
+      }
+
+      // Menambahkan event listener untuk setiap tombol
       buttons.forEach((button) => {
         button.addEventListener("click", () => {
-          // Menampilkan teks tombol yang ditekan pada labelOutput
-          labelOutput.textContent = "Tombol ditekan: " + button.textContent;
+          const btnText = button.textContent;
 
-          // Di sinilah Anda bisa menambahkan logika kalkulator
-          // misalnya penjumlahan, penyimpanan angka, dll.
+          // Jika tombol yang ditekan adalah angka (0-9)
+          if (!isNaN(btnText)) {
+            currentInput += btnText; // Menambahkan digit ke input
+            updateDisplay(currentInput);
+
+            // Jika tombol yang ditekan adalah operator "+"
+          } else if (btnText === "+") {
+            if (currentInput !== "") {
+              operands.push(Number(currentInput));
+              currentInput = ""; // Reset current input untuk angka selanjutnya
+              updateDisplay("+");
+            }
+
+            // Jika tombol "=" ditekan
+          } else if (btnText === "=") {
+            if (currentInput !== "") {
+              operands.push(Number(currentInput));
+            }
+            if (operands.length > 0) {
+              const result = calculateSum();
+              updateDisplay(result);
+              // Reset untuk perhitungan berikutnya
+              currentInput = "";
+              operands = [];
+            } else {
+              updateDisplay("0");
+            }
+          }
         });
       });
     </script>
