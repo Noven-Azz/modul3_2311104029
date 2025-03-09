@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Kalkulator Sederhana - modul2_nim</title>
+    <style>
+      /* ------------------------------
+       CSS: Mengatur tata letak & gaya
+       ------------------------------ */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f4f4f4;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      /* Container utama untuk tombol */
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 kolom */
+        grid-template-rows: repeat(4, 60px); /* 4 baris, tinggi 60px */
+        gap: 10px; /* jarak antar-tombol */
+        max-width: 300px; /* lebar maksimal container */
+        margin: 0 auto; /* agar container di tengah */
+      }
+
+      /* Gaya untuk tombol */
+      .grid-container button {
+        font-size: 1.2rem;
+        cursor: pointer;
+        border: none;
+        background-color: #ddd;
+        border-radius: 5px;
+        transition: background-color 0.2s;
+      }
+
+      /* Efek hover pada tombol */
+      .grid-container button:hover {
+        background-color: #ccc;
+      }
+
+      /* Area output */
+      #labelOutput {
+        background: #ffffff;
+        border: 1px solid #ccc;
+        padding: 10px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        width: 300px;
+        margin: 0 auto 20px auto;
+        text-align: center;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Label Output -->
+    <h2 id="labelOutput">Output akan muncul di sini</h2>
+
+    <!-- Grid Container untuk tombol -->
+    <div class="grid-container">
+      <!-- Baris 1 -->
+      <button>+</button>
+      <button>=</button>
+      <button>0</button>
+
+      <!-- Baris 2 -->
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+
+      <!-- Baris 3 -->
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+
+      <!-- Baris 4 -->
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+    </div>
+
+    <script>
+      // Mengambil elemen labelOutput
+      const labelOutput = document.getElementById("labelOutput");
+
+      // Mengambil semua tombol di dalam .grid-container
+      const buttons = document.querySelectorAll(".grid-container button");
+
+      // Menambahkan event listener pada setiap tombol
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // Menampilkan teks tombol yang ditekan pada labelOutput
+          labelOutput.textContent = "Tombol ditekan: " + button.textContent;
+
+          // Di sinilah Anda bisa menambahkan logika kalkulator
+          // misalnya penjumlahan, penyimpanan angka, dll.
+        });
+      });
+    </script>
+  </body>
+</html>
